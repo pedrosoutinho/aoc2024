@@ -26,13 +26,8 @@ fn main() {
 
                 for c in line[i + 4..].chars() {
                     if c == ',' {
-                        if s.is_empty() {
-                            ok = false;
-                            break;
-                        }
-
                         f += 1;
-                        if f > 1 {
+                        if f > 1 || s.is_empty() {
                             ok = false;
                             break;
                         }
