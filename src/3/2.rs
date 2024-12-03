@@ -35,6 +35,9 @@ fn main() {
                     }
 
                     if c == ')' {
+                        if f == 0 || r.is_empty() {
+                            ok = false;
+                        }
                         break;
                     }
 
