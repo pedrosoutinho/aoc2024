@@ -2,7 +2,6 @@ use std::io;
 
 fn main() {
     let mut ans: i64 = 0;
-    let mut e: bool = true;
     let mut line = String::new();
     while let Ok(n) = io::stdin().read_line(&mut line) {
         if n == 0 {
@@ -10,15 +9,7 @@ fn main() {
         }
 
         for i in 0..line.len() {
-            if line[i..].starts_with("do()") {
-                e = true;
-            }
-
-            if line[i..].starts_with("don't()") {
-                e = false;
-            }
-
-            if line[i..].starts_with("mul(") && e {
+            if line[i..].starts_with("mul(") {
                 let mut s: String = String::new();
                 let mut r: String = String::new();
                 let mut f: i32 = 0;
