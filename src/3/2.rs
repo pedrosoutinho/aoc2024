@@ -27,6 +27,10 @@ fn main() {
                 for c in line[i + 4..].chars() {
                     if c == ',' {
                         f += 1;
+                        if f > 1 {
+                            ok = false;
+                            break;
+                        }
                         continue;
                     }
 
@@ -37,7 +41,7 @@ fn main() {
                     if c.is_ascii_digit() {
                         if f == 0 {
                             s.push(c);
-                        } else if f == 1 {
+                        } else {
                             r.push(c);
                         }
                     } else {
