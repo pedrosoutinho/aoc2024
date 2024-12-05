@@ -17,7 +17,7 @@ fn main() {
 
         let a: usize = buf[0..2].parse().unwrap();
         let b: usize = buf[3..5].parse().unwrap();
-        graph[b].push(a);
+        graph[a].push(b);
         buf.clear();
     }
 
@@ -35,31 +35,18 @@ fn main() {
 
         for s in iter {
             let u: usize = s.trim().parse().unwrap();
-            v.push(u);
-        }
 
-        for i in 0..v.len() {
-            loop {
-                let mut found = false;
-
-                for &x in &graph[v[i]] {
-                    for j in i + 1..v.len() {
-                        if v[j] == x {
-                            v.swap(i, j);
-                            found = true;
-                            ok = false;
-                            break;
-                        }
-                    }
-                }
-
-                if !found {
+            for &x in &graph[u] {
+                if v.contains(&x) {
+                    ok = false;
                     break;
                 }
             }
+
+            v.push(u);
         }
 
-        if !ok {
+        if ok {
             let n = v.len();
             ans += v[n / 2] as i32;
         }
