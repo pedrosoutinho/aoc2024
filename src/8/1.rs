@@ -22,7 +22,8 @@ fn main() {
                 let v = map.get_mut(c).unwrap();
                 v.push((i, j));
             } else {
-                map.insert(*c, vec![(i, j)]);
+                let v = vec![(i, j)];
+                map.insert(*c, v);
             }
         }
     }
@@ -45,20 +46,14 @@ fn main() {
                 let (a, b) = ab;
                 let (c, d) = cd;
 
-                let mut dx = c as i32 - a as i32;
-                let mut dy = d as i32 - b as i32;
+                let dx = c as i32 - a as i32;
+                let dy = d as i32 - b as i32;
 
-                fn gcd(a: i32, b: i32) -> i32 {
-                    if b == 0 {
-                        return a;
-                    }
+                let x1 = c as i32 + dx;
+                let y1 = d as i32 + dy;
 
-                    gcd(b, a % b)
-                }
-
-                let g = gcd(dx.abs(), dy.abs());
-                dx /= g;
-                dy /= g;
+                let x2 = a as i32 - dx;
+                let y2 = b as i32 - dy;
 
                 let isin = |ij: (i32, i32), n: usize, m: usize| -> bool {
                     let (i, j) = ij;
@@ -72,26 +67,20 @@ fn main() {
                     false
                 };
 
-                for _ in 0..2 {
-                    let mut x = a as i32;
-                    let mut y = b as i32;
+                if isin((x1, y1), n, m) {
+                    sig[x1 as usize][y1 as usize] = true;
+                }
 
-                    while isin((x, y), n, m) {
-                        sig[x as usize][y as usize] = true;
-                        x += dx;
-                        y += dy;
-                    }
-
-                    dx *= -1;
-                    dy *= -1;
+                if isin((x2, y2), n, m) {
+                    sig[x2 as usize][y2 as usize] = true;
                 }
             }
         }
     }
 
-    for lin in sig {
-        for flag in lin {
-            if flag {
+    for lin in sig.iter() {
+        for &f in lin.iter() {
+            if f {
                 ans += 1;
             }
         }
